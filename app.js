@@ -5,224 +5,37 @@
 
 'use strict';
 
-var log4js = require('log4js');
-var logger = log4js.getLogger('APP');
-var toArray = require('stream-to-array')
-var _ = require('lodash');
+var express = require('express'),
+    config = require('./config/default.json'),
+    app = express(),
+    log4js = require('log4js'),
+    logger = log4js.getLogger('APP'),
+    fs = require('fs'),
+    batchArgu = process.argv.slice(2),
+    taxonomieFile = batchArgu[0],
+    destinationFile = batchArgu[1],
+    parser = require('./lib/parser');
 
-var fs = require('fs');
-var xml2js = require('xml2js');
-
-var batchArgu = process.argv.slice(2);
-var taxonomieFile = batchArgu[0];
-var destinationFile = batchArgu[1];
+var server_port = config.port || 1405;
+var server_ip_address = config.host || '127.0.0.1';
 
 var taxonomieStream = fs.createReadStream(taxonomieFile);
 var destinationStream = fs.createReadStream(destinationFile);
 
 var taxonomiesData, destinationsData;
 
-function _taxonomiesRecToJson(taxonomiesList, result) {
-    if (!result) {
-        result = [];
-    }
-    for (let i = 0; i < taxonomiesList.length; i++) {
-        let taxonomie = taxonomiesList[i];
 
-        if (taxonomie.$) {
-            let infos ={}, id = taxonomie.$.atlas_node_id;
-             infos[id] = {
-                id: taxonomie.$.atlas_node_id,
-                geoId: taxonomie.$.geo_id,
-                name: taxonomie.node_name[0],
-                ethyl_content_object_id: taxonomie.$.ethyl_content_object_id
-            };
-            result.push(infos);
-        }
-        if (taxonomie && taxonomie.node && taxonomie.node.length > 0) {
-            result = _taxonomiesRecToJson(taxonomie.node, result);
+require('./common/config_app')(app, config);
+logger.info('STARTING THE DESTINATION SERVER');
+logger.info('-------------------------');
 
-        }
-
-    }
-    return result;
-
-}
-
-
-function _parseXML(uglyData, name, res) {
-
-    if (!res) {
-        res = [];
-    }
-    if (uglyData) {
-
-        if (uglyData.length > 0) {
-            for (var i = 0; i < uglyData.length; i++) {
-                _getDataFromParser(uglyData[i], name, res);
-            };
-
-        } else if (uglyData[name]) {
-            res.push(uglyData[name])
-        }
-    }
-
-    return res;
-
-}
-
-function _destinationToJson(destinationsList) {
-    var destinations = [];
-    for (var i = 0; i < destinationsList.length; i++) {
-        let destinationData = {};
-        let destination = destinationsList[i];
-        var overview, history = [],
-            introductory = {},
-            health_and_safety = {},
-            money_and_costs = {},
-            getting_around = {},
-            getting_there_and_away = {},
-            when_to_go = {},
-            work = {};
-
-
-        let gettingAround = _.get(destination, 'transport[0].getting_around[0]', undefined);
-        let gettingThere = _.get(destination, 'transport[0].getting_there_and_away[0]', undefined);
-        let health_safety = _.get(destination, 'practical_information[0].health_and_safety[0]', undefined);
-        let moneyCost = _.get(destination, 'practical_information[0].money_and_costs[0]', undefined);
-        let visas = _.get(destination, 'practical_information[0].visas[0].overview', undefined);
-        let whenToGo = _.get(destination, 'weather[0].when_to_go[0]', undefined);
-        let workLive = _.get(destination, 'work_live_study[0].work[0]', undefined);
-
-        if (destination.history) {
-            var result = _parseXML(destination.history, 'history');
-
-            history = result[0][0]['history'];
-
-            if (result[0][0]['overview']) {
-                let overview = result[0][0]['overview']
-            }
-        }
-
-        introductory.introduction = {
-            overview: _.get(destination, 'introductory[0].introduction[0].overview', undefined)
-        };
-
-        if (health_safety) {
-            health_and_safety = {
-                before_you_go: health_safety.before_you_go,
-                dangers_and_annoyances: health_safety.dangers_and_annoyances,
-                in_transit: health_safety.in_transit,
-                while_youre_there: health_safety.while_youre_there,
-            }
-        }
-
-        if (moneyCost) {
-            money_and_costs = {
-                cost: moneyCost.costs,
-                money: moneyCost.money
-            }
-        }
-
-
-        var practical_information = {
-            health_and_safety: health_and_safety,
-            money_and_costs: money_and_costs,
-            visas: visas
-        }
-
-
-        if (gettingAround) {
-            getting_around = {
-                overview: gettingAround.overview,
-                air: gettingAround.air,
-                bicycle: gettingAround.bicycle,
-                car_and_motorcycle: gettingAround.car_and_motorcycle,
-                local_transport: gettingAround.local_transport,
-                train: gettingAround.train,
-            }
-        }
-
-
-        if (gettingThere) {
-            getting_there_and_away.air = gettingThere.air
-        };
-
-        var transport = {
-            getting_around: getting_around,
-            getting_there_and_away: getting_there_and_away
-        }
-
-
-        if (whenToGo) {
-            when_to_go = {
-                overview: whenToGo.overview,
-                climate: whenToGo.climate
-            }
-        }
-
-
-        var weather = {
-            when_to_go: when_to_go
-        }
-
-        if (workLive) {
-            work = {
-                overview: workLive.overview,
-                business: workLive.business
-            }
-        }
-
-
-        var work_live_study = {
-            work: work
-        };
-
-        destinationData = {
-            id: destination.$.atlas_id,
-            name: destination.$.title,
-            overview: overview,
-            history: history,
-            introductory: introductory,
-            practical_information: practical_information,
-            transport: transport,
-            weather: weather,
-            work_live_study: work_live_study
-        }
-
-        destinations.push(destinationData);
-
-    }
-
-    return destinations
-
-}
-
-
-toArray(taxonomieStream, function(err, arr) {
-    if (err) return console.log(err.message);
-
-    var content = Buffer.concat(arr);
-    var parser = new xml2js.Parser();
-    parser.parseString(content, function(err, res) {
-        if (err) return console.log(err.message);
-
-        var continents = res.taxonomies.taxonomy[0].node;
-        taxonomiesData = _taxonomiesRecToJson(continents);
-
-    });
-
+app.listen(server_port, server_ip_address, function () {
+    logger.info("Listening on " + server_ip_address + ", server_port " + server_port)
 });
+logger.info('Started the server');
 
 
-toArray(destinationStream, function(err, arr) {
-    if (err) return console.log(err.message)
+//taxonomiesData = this.parser.parseTaxonomies(taxonomieStream);
+//destinationsData = parser.parseDestination(destinationStream);
 
-    var content = Buffer.concat(arr)
-    var parser = new xml2js.Parser();
-    parser.parseString(content, function(err, res) {
-        if (err) return console.log(err.message)
-        destinationsData = _destinationToJson(res.destinations.destination);
 
-    })
-});

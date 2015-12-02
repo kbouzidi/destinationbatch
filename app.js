@@ -11,7 +11,6 @@ var toArray = require('stream-to-array')
 var _ = require('lodash');
 
 var fs = require('fs');
-var XmlStream = require('xml-stream');
 var xml2js = require('xml2js');
 
 var batchArgu = process.argv.slice(2);
@@ -19,53 +18,39 @@ var taxonomieFile = batchArgu[0];
 var destinationFile = batchArgu[1];
 
 var taxonomieStream = fs.createReadStream(taxonomieFile);
-var taxonomieXml = new XmlStream(taxonomieStream);
-
 var destinationStream = fs.createReadStream(destinationFile);
-var destinationXml = new XmlStream(destinationStream);
 
-taxonomieXml.preserve('taxonomies', true);
-taxonomieXml.collect('node');
-var countries = [],
-    continent = [];
+var taxonomiesData, destinationsData;
 
-taxonomieXml.on('endElement: taxonomies', function(item) {
-    var worldName = item['taxonomy']['taxonomy_name']['$text'];
-    var world = item['taxonomy']['node'];
+function _taxonomiesRecToJson(taxonomiesList, result) {
+    if (!result) {
+        result = [];
+    }
+    for (let i = 0; i < taxonomiesList.length; i++) {
+        let taxonomie = taxonomiesList[i];
 
-    for (let i = 0; i < world.length; i++) {
-        let continentName = world[i]['node_name']['$text'];
-        let countriesList = world[i]['node'];
-        // console.log(countriesList)
-        continent = {
-            name: continentName,
-            atlasId: world[i]['$']['atlas_node_id'],
-            id: world[i]['$']['ethyl_content_object_id'],
-            geoId: world[i]['$']['geo_id']
-        }
-
-        if (countriesList && countriesList.length > 0) {
-            for (let j = 0; j < countriesList.length; j++) {
-                countries.push({
-                    name: countriesList[j]['node_name']['$text'],
-                    continentName: continentName,
-                    atlasId: countriesList[j]['$']['atlas_node_id'],
-                    id: countriesList[j]['$']['ethyl_content_object_id'],
-                    geoId: countriesList[j]['$']['geo_id'],
-                    continent: continent
-
-
-                })
+        if (taxonomie.$) {
+            let infos ={}, id = taxonomie.$.atlas_node_id;
+             infos[id] = {
+                id: taxonomie.$.atlas_node_id,
+                geoId: taxonomie.$.geo_id,
+                name: taxonomie.node_name[0],
+                ethyl_content_object_id: taxonomie.$.ethyl_content_object_id
             };
+            result.push(infos);
+        }
+        if (taxonomie && taxonomie.node && taxonomie.node.length > 0) {
+            result = _taxonomiesRecToJson(taxonomie.node, result);
 
         }
-    };
 
- 
-});
+    }
+    return result;
+
+}
 
 
-function _getDataFromParser(uglyData, name, res) {
+function _parseXML(uglyData, name, res) {
 
     if (!res) {
         res = [];
@@ -74,7 +59,6 @@ function _getDataFromParser(uglyData, name, res) {
 
         if (uglyData.length > 0) {
             for (var i = 0; i < uglyData.length; i++) {
-                // console.log(uglyData[i])
                 _getDataFromParser(uglyData[i], name, res);
             };
 
@@ -83,13 +67,11 @@ function _getDataFromParser(uglyData, name, res) {
         }
     }
 
-
-
     return res;
 
 }
 
-function _creatDestinationData(destinationsList) {
+function _destinationToJson(destinationsList) {
     var destinations = [];
     for (var i = 0; i < destinationsList.length; i++) {
         let destinationData = {};
@@ -112,9 +94,8 @@ function _creatDestinationData(destinationsList) {
         let whenToGo = _.get(destination, 'weather[0].when_to_go[0]', undefined);
         let workLive = _.get(destination, 'work_live_study[0].work[0]', undefined);
 
-        //console.log(destination.history);
         if (destination.history) {
-            var result = _getDataFromParser(destination.history, 'history');
+            var result = _parseXML(destination.history, 'history');
 
             history = result[0][0]['history'];
 
@@ -209,7 +190,6 @@ function _creatDestinationData(destinationsList) {
             work_live_study: work_live_study
         }
 
-        console.log(destinationData.name);
         destinations.push(destinationData);
 
     }
@@ -218,6 +198,23 @@ function _creatDestinationData(destinationsList) {
 
 }
 
+
+toArray(taxonomieStream, function(err, arr) {
+    if (err) return console.log(err.message);
+
+    var content = Buffer.concat(arr);
+    var parser = new xml2js.Parser();
+    parser.parseString(content, function(err, res) {
+        if (err) return console.log(err.message);
+
+        var continents = res.taxonomies.taxonomy[0].node;
+        taxonomiesData = _taxonomiesRecToJson(continents);
+
+    });
+
+});
+
+
 toArray(destinationStream, function(err, arr) {
     if (err) return console.log(err.message)
 
@@ -225,9 +222,7 @@ toArray(destinationStream, function(err, arr) {
     var parser = new xml2js.Parser();
     parser.parseString(content, function(err, res) {
         if (err) return console.log(err.message)
+        destinationsData = _destinationToJson(res.destinations.destination);
 
-        var dest = _creatDestinationData(res.destinations.destination);
-
-        console.log(dest.length);
     })
-})
+});

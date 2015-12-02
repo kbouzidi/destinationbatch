@@ -61,32 +61,9 @@ taxonomieXml.on('endElement: taxonomies', function(item) {
         }
     };
 
-    // console.log(countries)
-
-
+ 
 });
 
-/*  var destinationList = [];
-var processDocument = function(item) {
-    // Collect document properties
- //console.log(destinationList)
-
-    if (item){
-        if (!destinationList[item.$name]){
-            destinationList[item.$name]= [item.$text];
-        } else {
-            destinationList[item.$name].push(item.$text)
-        }
-    }
-
-    console.log(destinationList.length)
-
-   
-};
-
- 
-destinationXml.on('updateElement: destination history', processDocument);
-//destinationXml.on('updateElement: history', processDocument);*/
 
 function _getDataFromParser(uglyData, name, res) {
 

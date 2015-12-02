@@ -89,17 +89,21 @@ destinationXml.on('updateElement: destination history', processDocument);
 //destinationXml.on('updateElement: history', processDocument);*/
 
 function _getDataFromParser(uglyData, name, res) {
+
     if (!res) {
         res = [];
     }
-    if (uglyData && uglyData.length > 0) {
-        for (var i = 0; i < uglyData.length; i++) {
-            // console.log(uglyData[i])
-            _getDataFromParser(uglyData[i], name, res);
-        };
+    if (uglyData) {
 
-    } else if (uglyData[name]) {
-        res.push(uglyData[name])
+        if (uglyData.length > 0) {
+            for (var i = 0; i < uglyData.length; i++) {
+                // console.log(uglyData[i])
+                _getDataFromParser(uglyData[i], name, res);
+            };
+
+        } else if (uglyData[name]) {
+            res.push(uglyData[name])
+        }
     }
 
 
@@ -110,7 +114,6 @@ function _getDataFromParser(uglyData, name, res) {
 
 function _creatDestinationData(destinationsList) {
     var destinations = [];
-
     for (var i = 0; i < destinationsList.length; i++) {
         let destinationData = {};
         let destination = destinationsList[i];
@@ -123,19 +126,29 @@ function _creatDestinationData(destinationsList) {
             when_to_go = {},
             work = {};
 
-        let result = _getDataFromParser(destination.history, 'history');
 
-        history = result[0][0]['history'];
-        if (result[0][0]['overview']) {
-            let overview = result[0][0]['overview']
+        let gettingAround = _.get(destination, 'transport[0].getting_around[0]', undefined);
+        let gettingThere = _.get(destination, 'transport[0].getting_there_and_away[0]', undefined);
+        let health_safety = _.get(destination, 'practical_information[0].health_and_safety[0]', undefined);
+        let moneyCost = _.get(destination, 'practical_information[0].money_and_costs[0]', undefined);
+        let visas = _.get(destination, 'practical_information[0].visas[0].overview', undefined);
+        let whenToGo = _.get(destination, 'weather[0].when_to_go[0]', undefined);
+        let workLive = _.get(destination, 'work_live_study[0].work[0]', undefined);
+
+        //console.log(destination.history);
+        if (destination.history) {
+            var result = _getDataFromParser(destination.history, 'history');
+
+            history = result[0][0]['history'];
+
+            if (result[0][0]['overview']) {
+                let overview = result[0][0]['overview']
+            }
         }
+
         introductory.introduction = {
             overview: _.get(destination, 'introductory[0].introduction[0].overview', undefined)
         };
-
-        let health_safety = _.get(destination, 'practical_information[0].health_and_safety[0]', undefined);
-        let moneyCost = destination.practical_information[0].money_and_costs[0];
-        let visas = destination.practical_information[0].visas[0].overview;
 
         if (health_safety) {
             health_and_safety = {
@@ -146,12 +159,13 @@ function _creatDestinationData(destinationsList) {
             }
         }
 
-
-
-        money_and_costs = {
-            cost: moneyCost.costs,
-            money: moneyCost.money
+        if (moneyCost) {
+            money_and_costs = {
+                cost: moneyCost.costs,
+                money: moneyCost.money
+            }
         }
+
 
         var practical_information = {
             health_and_safety: health_and_safety,
@@ -159,53 +173,66 @@ function _creatDestinationData(destinationsList) {
             visas: visas
         }
 
-        let gettingAround = destination.transport[0].getting_around[0];
-        let gettingThere = destination.transport[0].getting_there_and_away[0];
-        getting_around = {
-            overview: gettingAround.overview,
-            air: gettingAround.air,
-            bicycle: gettingAround.bicycle,
-            car_and_motorcycle: gettingAround.car_and_motorcycle,
-            local_transport: gettingAround.local_transport,
-            train: gettingAround.train,
+
+        if (gettingAround) {
+            getting_around = {
+                overview: gettingAround.overview,
+                air: gettingAround.air,
+                bicycle: gettingAround.bicycle,
+                car_and_motorcycle: gettingAround.car_and_motorcycle,
+                local_transport: gettingAround.local_transport,
+                train: gettingAround.train,
+            }
         }
-        getting_there_and_away.air = gettingThere.air;
+
+
+        if (gettingThere) {
+            getting_there_and_away.air = gettingThere.air
+        };
 
         var transport = {
             getting_around: getting_around,
             getting_there_and_away: getting_there_and_away
         }
 
-        let whenToGo = destination.weather[0].when_to_go[0];
-        let workLive = destination.work_live_study[0].work[0];
-        when_to_go = {
-            overview: whenToGo.overview,
-            climate: whenToGo.climate
+
+        if (whenToGo) {
+            when_to_go = {
+                overview: whenToGo.overview,
+                climate: whenToGo.climate
+            }
         }
+
 
         var weather = {
             when_to_go: when_to_go
         }
 
-        work = {
-            overview: workLive.overview,
-            business: workLive.business
+        if (workLive) {
+            work = {
+                overview: workLive.overview,
+                business: workLive.business
+            }
         }
+
 
         var work_live_study = {
             work: work
         };
 
         destinationData = {
+            id: destination.$.atlas_id,
+            name: destination.$.title,
             overview: overview,
             history: history,
             introductory: introductory,
             practical_information: practical_information,
             transport: transport,
             weather: weather,
-            work_live_study: work_live_study,
+            work_live_study: work_live_study
         }
 
+        console.log(destinationData.name);
         destinations.push(destinationData);
 
     }
@@ -222,9 +249,8 @@ toArray(destinationStream, function(err, arr) {
     parser.parseString(content, function(err, res) {
         if (err) return console.log(err.message)
 
-        //var dest = _creatDestinationData(res.destinations.destination);
+        var dest = _creatDestinationData(res.destinations.destination);
 
-
-        console.log(res.destinations);
+        console.log(dest.length);
     })
 })

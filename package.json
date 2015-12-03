@@ -2,9 +2,17 @@
   "name": "destinationparser",
   "version": "0.0.1",
   "description": "## Environment setup Download and setup the following applications:",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kbouzidi/destinationbatch.git"
+  },
+  "homepage": "https://github.com/kbouzidi/destinationbatch#readme",
+  "bugs": {
+    "url": "https://github.com/kbouzidi/destinationbatch/issues"
   },
   "author": "Khalil BOUZIDI",
   "license": "ISC",
@@ -18,9 +26,14 @@
     "log4js": "^0.6.29",
     "method-override": "^2.3.5",
     "morgan": "^1.6.1",
+    "npm": "^3.5.0",
     "stream-to": "^2.0.0",
     "stream-to-array": "^2.2.0",
-    "xml-stream": "^0.4.5",
+    "when": "^3.7.5",
     "xml2js": "^0.4.15"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": "~4.2.1"
   }
 }

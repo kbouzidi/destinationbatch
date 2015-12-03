@@ -43,7 +43,4 @@ logger.info('Started the server');
 
 
 
-destinationsData = parse.parseDestination(destinationStream);
-
-
 

@@ -14,33 +14,48 @@ var express = require('express'),
     batchArgu = process.argv.slice(2),
     taxonomieFile = batchArgu[0],
     destinationFile = batchArgu[1],
-    parse = require('./lib/parse');
+    parser = require('./lib/parser'),
+    wintersmith = require('wintersmith'),
+    jsonfile = require('jsonfile');
+
 
 var server_port = config.port || 1405;
 var server_ip_address = config.host || '127.0.0.1';
 
 var taxonomieStream = fs.createReadStream(taxonomieFile);
 var destinationStream = fs.createReadStream(destinationFile);
+var outputFile = __dirname + '/output/contents/data/';
 
 var taxonomiesData, destinationsData;
-parse.parseTaxonomies(taxonomieStream).then(function (res) {
-    taxonomiesData = res;
-    console.log(taxonomiesData);
-});
 
-parse.parseDestination(destinationStream).then(function (res) {
-    taxonomieStream = res;
-    console.log(taxonomieStream);
-});
+
 require('./common/config_app')(app, config);
 logger.info('STARTING THE DESTINATION SERVER');
 logger.info('-------------------------');
+/*
+ app.listen(server_port, server_ip_address, function () {
+ logger.info("Listening on " + server_ip_address + ", server_port " + server_port)
+ });
+ logger.info('Started the server');
+ */
 
-app.listen(server_port, server_ip_address, function () {
-    logger.info("Listening on " + server_ip_address + ", server_port " + server_port)
+//taxonomiesData = parser.parseTaxonomies(taxonomieStream);
+//logger.debug(taxonomiesData);
+parser.parseTaxonomies(taxonomieStream).then(function (taxonomies) {
+    taxonomiesData = taxonomies;
+
+    jsonfile.writeFile(outputFile + 'taxonomies.json', taxonomiesData, function (err) {
+        console.error(err)
+    })
 });
-logger.info('Started the server');
 
+parser.parseDestination(destinationStream).then(function (destinations) {
+    destinationsData = destinations;
+    jsonfile.writeFile(outputFile + 'destinations.json', destinationsData, function (err) {
+        console.error(err)
+
+    })
+});
 
 
 

@@ -1,7 +1,7 @@
 {
-  "name": "destinationparser",
-  "version": "0.0.1",
-  "description": "## Environment setup Download and setup the following applications:",
+    "name": "destinationparser",
+    "version": "0.0.1",
+    "description": "## Environment setup Download and setup the following applications:",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -14,26 +14,33 @@
   "bugs": {
     "url": "https://github.com/kbouzidi/destinationbatch/issues"
   },
-  "author": "Khalil BOUZIDI",
-  "license": "ISC",
-  "dependencies": {
-    "body-parser": "^1.14.1",
-    "compression": "^1.6.0",
-    "cookie-parser": "^1.4.0",
-    "errorhandler": "^1.4.2",
-    "express": "^4.13.3",
-    "lodash": "^3.10.1",
-    "log4js": "^0.6.29",
-    "method-override": "^2.3.5",
-    "morgan": "^1.6.1",
-    "npm": "^3.5.0",
-    "stream-to": "^2.0.0",
-    "stream-to-array": "^2.2.0",
-    "when": "^3.7.5",
-    "xml2js": "^0.4.15"
-  },
-  "devDependencies": {},
+    "author": "Khalil BOUZIDI",
+    "license": "ISC",
+    "dependencies": {
+        "body-parser": "^1.14.1",
+        "browsernizr": "*",
+        "compression": "^1.6.0",
+        "cookie-parser": "^1.4.0",
+        "errorhandler": "^1.4.2",
+        "express": "^4.13.3",
+        "jsonfile": "^2.2.3",
+        "lodash": "^3.10.1",
+        "log4js": "^0.6.29",
+        "method-override": "^2.3.5",
+        "morgan": "^1.6.1",
+        "stream-to": "^2.0.0",
+        "stream-to-array": "^2.2.0",
+        "when": "^3.7.5",
+        "wintersmith": "^2.2.4",
+        "wintersmith-browserify": "*",
+        "wintersmith-less": "*",
+        "wintersmith-livereload": "*",
+        "wintersmith-nunjucks": "*",
+        "xml-stream": "^0.4.5",
+        "xml2js": "^0.4.15"
+    } , "devDependencies": {},
   "engines": {
     "node": "~4.2.1"
   }
+}
 }

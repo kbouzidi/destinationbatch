@@ -17,6 +17,7 @@
   "author": "Khalil BOUZIDI",
   "license": "ISC",
   "dependencies": {
+    "chai": "^3.4.1",
     "html2jade": "^0.8.4",
     "jade": "^1.11.0",
     "jsonfile": "^2.2.3",
@@ -26,6 +27,7 @@
     "morgan": "^1.6.1",
     "stream-to": "^2.0.0",
     "stream-to-array": "^2.2.0",
+    "tokensearch.js": "^0.5.26",
     "when": "^3.7.5",
     "xml2js": "^0.4.15"
   },

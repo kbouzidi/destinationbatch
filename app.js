@@ -23,15 +23,14 @@ var destinationStream = fs.createReadStream(destinationFile);
 
 var outputDestination = __dirname + batchArgu[2];
 
-var template = fs.readFileSync(__dirname + '/input/example.html', 'utf8');
-console.log(template);
+var template = fs.readFileSync(__dirname, 'utf8');
+//console.log(template);
 
 
-q.all([parser.parseTaxonomies(taxonomieStream), parser.parseDestination(destinationStream) ]).spread(function (taxonomies, destination) {
-    return gen.htmlGenerator(taxonomies, destination);
-}).then(function (rr) {
-    console.log("app", rr, outputDestination);
-    return gen.htmlWriter(rr, outputDestination);
+q.all([parser.parseTaxonomies(taxonomieStream), parser.parseDestination(destinationStream), parser.jadeConverter(template) ]).spread(function (taxonomies, destination, jadeTemplate) {
+    return gen.htmlGenerator(taxonomies, destination, jadeTemplate);
+}).then(function (result) {
+    return gen.htmlWriter(result, outputDestination);
 }).then(function (tt) {
     console.log(tt);
 }).catch(function (err) {

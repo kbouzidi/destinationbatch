@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html ng-app="destinationApp">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <!-- <title>Lonely Planet</title>-->
+
+    <link href="css/all.css" media="screen" rel="stylesheet" type="text/css">
+
+</head>
+
+<body>
+<div id="container" ng-controller="MainCtrl">
+    <div id="header">
+        <div id="logo"></div>
+        <h1> {{name}}</h1>
+    </div>
+
+    <div id="wrapper">
+        <div id="sidebar">
+            <div class="block">
+                <h3>Navigation</h3>
+
+                <div class="content">
+                    <div class="inner">
+                        HIERARCHY NAVIGATION GOES HERE
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="main">
+            <div class="block">
+                <div class="secondary-navigation">
+                    <ul>
+                        <li class="first"><a href="#" ng-click="selectTab('home')">{{name}}</a></li>
+                        <li class="first"><a href="#" ng-click="selectTab('practical_information')">Practical
+                            Information </a>
+                        </li>
+                        <li class="first"><a href="#" ng-click="selectTab('visas')">visas</a>
+                        </li>
+
+                    </ul>
+                    <div class="clear"></div>
+
+                    <div class="clear"></div>
+                </div>
+                <div class="content" ng-show="isSelected('home')">
+                    <div class="inner">
+                        <h3>Overview</h3>
+                        <md-content layout-padding>
+                            <div hm-read-more hm-text="{{history}}" hm-limit="{{limit}}" hm-more-text="{{moreText}}"
+                                 hm-less-text="{{lessText}}" hm-dots-class="{{dotsClass}}"
+                                 hm-link-class="{{linkClass}}">
+                            </div>
+                        </md-content>
+                    </div>
+
+
+                    <div class="row">
+                        <ul>
+                            <li class="col-s-4">
+                                <h3><a href="#" ng-click="selectTab('practical_information')">Practical
+                                    Information</a></h3>
+                                <md-content layout-padding>
+                                    <div hm-read-more hm-text="{{before_you_go}}" hm-limit="{{limit}}"
+                                         hm-more-text="{{moreText}}"
+                                         hm-less-text="{{lessText}}" hm-dots-class="{{dotsClass}}"
+                                         hm-link-class="{{linkClass}}">
+                                    </div>
+                                </md-content>
+                                <a href="#" ng-click="selectTab('practical_information')">read more</a></li>
+
+                            <li class="col-s-4">
+                                <h3><a href="#" ng-click="selectTab('practical_information')">Money and costs
+                                </a></h3>
+                                <md-content layout-padding>
+                                    <div hm-read-more hm-text="{{before_you_go}}" hm-limit="{{limit}}"
+                                         hm-more-text="{{moreText}}"
+                                         hm-less-text="{{lessText}}" hm-dots-class="{{dotsClass}}"
+                                         hm-link-class="{{linkClass}}">
+                                    </div>
+                                </md-content>
+                                <a href="#" ng-click="selectTab('practical_information')">read more</a></li>
+
+
+                            <li class="col-s-4">
+                                <h3><a href="#" ng-click="selectTab('practical_information')">visas</a></h3>
+                                <md-content layout-padding>
+                                    <div hm-read-more hm-text="{{before_you_go}}" hm-limit="{{limit}}"
+                                         hm-more-text="{{moreText}}"
+                                         hm-less-text="{{lessText}}" hm-dots-class="{{dotsClass}}"
+                                         hm-link-class="{{linkClass}}">
+                                    </div>
+                                </md-content>
+                                <a href="#" ng-click="selectTab('practical_information')">read more</a></li>
+
+                            <li class="col-s-4">
+                                <h3><a href="#" ng-click="selectTab('practical_information')">transport</a></h3>
+                                <md-content layout-padding>
+                                    <div hm-read-more hm-text="{{before_you_go}}" hm-limit="{{limit}}"
+                                         hm-more-text="{{moreText}}"
+                                         hm-less-text="{{lessText}}" hm-dots-class="{{dotsClass}}"
+                                         hm-link-class="{{linkClass}}">
+                                    </div>
+                                </md-content>
+                                <a href="#" ng-click="selectTab('practical_information')">read more</a></li>
+
+
+                            <li class="col-s-4">
+                                <h3><a href="#"
+                                       ng-click="selectTab('practical_information')">getting_there_and_away</a></h3>
+                                <md-content layout-padding>
+                                    <div hm-read-more hm-text="{{before_you_go}}" hm-limit="{{limit}}"
+                                         hm-more-text="{{moreText}}"
+                                         hm-less-text="{{lessText}}" hm-dots-class="{{dotsClass}}"
+                                         hm-link-class="{{linkClass}}">
+                                    </div>
+                                </md-content>
+                                <a href="#" ng-click="selectTab('practical_information')">read more</a></li>
+
+
+                            <li class="col-s-4">
+                                <h3><a href="#" ng-click="selectTab('practical_information')">when_to_go</a></h3>
+                                <md-content layout-padding>
+                                    <div hm-read-more hm-text="{{before_you_go}}" hm-limit="{{limit}}"
+                                         hm-more-text="{{moreText}}"
+                                         hm-less-text="{{lessText}}" hm-dots-class="{{dotsClass}}"
+                                         hm-link-class="{{linkClass}}">
+                                    </div>
+                                </md-content>
+                                <a href="#" ng-click="selectTab('practical_information')">read more</a></li>
+
+
+                            <li class="col-s-4" ng-repeat="key in keys">
+                                <h3><a href="#" ng-click="selectTab('{{key.id}}')"></a>
+                                </h3>
+                                <md-content layout-padding>
+                                    <div hm-read-more hm-text="{{key.}}" hm-limit="{{limit}}"
+                                         hm-more-text="{{moreText}}"
+                                         hm-less-text="{{lessText}}" hm-dots-class="{{dotsClass}}"
+                                         hm-link-class="{{linkClass}}">
+                                    </div>
+                                </md-content>
+                                <a href="#" ng-click="selectTab('practical_information')">read more</a></li>
+
+                        </ul>
+
+                    </div>
+
+                </div>
+
+                <div ng-show="isSelected('practical_information')">
+                    <div class="inner">
+
+                        <h3>Before Your go</h3>
+                        <md-content layout-padding>
+                            <div hm-read-more hm-text="{{before_you_go}}" hm-limit="{{limit}}"
+                                 hm-more-text="{{moreText}}"
+                                 hm-less-text="{{lessText}}" hm-dots-class="{{dotsClass}}"
+                                 hm-link-class="{{linkClass}}">
+                            </div>
+                        </md-content>
+                    </div>
+
+                    <div class="inner">
+
+                        <h3>dangers_and_annoyances</h3>
+                        <md-content layout-padding>
+                            <div hm-read-more hm-text="{{dangers_and_annoyances}}" hm-limit="{{limit}}"
+                                 hm-more-text="{{moreText}}"
+                                 hm-less-text="{{lessText}}" hm-dots-class="{{dotsClass}}"
+                                 hm-link-class="{{linkClass}}">
+                            </div>
+                        </md-content>
+                    </div>
+
+                    <div class="inner">
+
+                        <h3>in_transit</h3>
+                        <md-content layout-padding>
+                            <div hm-read-more hm-text="{{in_transit}}" hm-limit="{{limit}}"
+                                 hm-more-text="{{moreText}}"
+                                 hm-less-text="{{lessText}}" hm-dots-class="{{dotsClass}}"
+                                 hm-link-class="{{linkClass}}">
+                            </div>
+                        </md-content>
+                    </div>
+
+                    <div class="inner">
+
+                        <h3>while_youre_there</h3>
+                        <md-content layout-padding>
+                            <div hm-read-more hm-text="{{while_youre_there}}" hm-limit="{{limit}}"
+                                 hm-more-text="{{moreText}}"
+                                 hm-less-text="{{lessText}}" hm-dots-class="{{dotsClass}}"
+                                 hm-link-class="{{linkClass}}">
+                            </div>
+                        </md-content>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="bower_components/angular/angular.min.js"></script>
+<script src="bower_components/angular-animate/angular-animate.min.js"></script>
+<script src="bower_components/angular-aria/angular-aria.min.js"></script>
+<script src="bower_components/angular-material/angular-material.min.js"></script>
+<link href="https://s3-us-west-2.amazonaws.com/s.cdpn.io/110131/responsive.css" rel="stylesheet">
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css"/>
+<script src="bower_components/angular-read-more/dist/readmore.js"></script>
+
+<script src="js/main.js"></script>
+</html>

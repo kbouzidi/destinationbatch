@@ -5,9 +5,7 @@
 
 'use strict';
 
-var express = require('express'),
-    config = require('./config/default.json'),
-    app = express(),
+var config = require('./config/default.json'),
     log4js = require('log4js'),
     logger = log4js.getLogger('APP'),
     fs = require('fs'),
@@ -15,47 +13,28 @@ var express = require('express'),
     taxonomieFile = batchArgu[0],
     destinationFile = batchArgu[1],
     parser = require('./lib/parser'),
-    wintersmith = require('wintersmith'),
-    jsonfile = require('jsonfile');
-
-
-var server_port = config.port || 1405;
-var server_ip_address = config.host || '127.0.0.1';
+    jsonfile = require('jsonfile'),
+    q = require('./lib/utils/q'),
+    gen = require('./lib/documentgenerator');
 
 var taxonomieStream = fs.createReadStream(taxonomieFile);
 var destinationStream = fs.createReadStream(destinationFile);
-var outputFile = __dirname + '/output/contents/data/';
-
-var taxonomiesData, destinationsData;
 
 
-require('./common/config_app')(app, config);
-logger.info('STARTING THE DESTINATION SERVER');
-logger.info('-------------------------');
-/*
- app.listen(server_port, server_ip_address, function () {
- logger.info("Listening on " + server_ip_address + ", server_port " + server_port)
- });
- logger.info('Started the server');
- */
+var outputDestination = __dirname + batchArgu[2];
 
-//taxonomiesData = parser.parseTaxonomies(taxonomieStream);
-//logger.debug(taxonomiesData);
-parser.parseTaxonomies(taxonomieStream).then(function (taxonomies) {
-    taxonomiesData = taxonomies;
+var template = fs.readFileSync(__dirname + '/input/example.html', 'utf8');
+console.log(template);
 
-    jsonfile.writeFile(outputFile + 'taxonomies.json', taxonomiesData, function (err) {
-        console.error(err)
-    })
+
+q.all([parser.parseTaxonomies(taxonomieStream), parser.parseDestination(destinationStream) ]).spread(function (taxonomies, destination) {
+    return gen.htmlGenerator(taxonomies, destination);
+}).then(function (rr) {
+    console.log("app", rr, outputDestination);
+    return gen.htmlWriter(rr, outputDestination);
+}).then(function (tt) {
+    console.log(tt);
+}).catch(function (err) {
+    console.log(err);
 });
-
-parser.parseDestination(destinationStream).then(function (destinations) {
-    destinationsData = destinations;
-    jsonfile.writeFile(outputFile + 'destinations.json', destinationsData, function (err) {
-        console.error(err)
-
-    })
-});
-
-
 

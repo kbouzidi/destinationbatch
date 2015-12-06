@@ -19,7 +19,7 @@ angular.module('destinationApp', ['ngMaterial', 'hm.readmore'])
             $scope.name = data.name;
             $scope.id = data.id;
 
-            if (data.history || data.overview) {
+            if (data.history || data.overview || data.introductory) {
                 $scope.home = true;
                 $scope.homeMenu = true;
                 if (data.history) {
@@ -33,9 +33,16 @@ angular.module('destinationApp', ['ngMaterial', 'hm.readmore'])
                         $scope.history += '\n' + data.overview[0]
                     }
 
+                    if (data.overview) {
+                        $scope.history += '\n' + data.introductory.introduction.overview[0]
+                    }
+
                 } else if (data.overview) {
 
                     $scope.history += '\n' + data.overview[0]
+                } else if (data.overview) {
+
+                    $scope.history += '\n' + data.introductory.introduction.overview[0]
                 }
 
             }
@@ -45,14 +52,39 @@ angular.module('destinationApp', ['ngMaterial', 'hm.readmore'])
             for (var key in data) {
                 if (key == 'practical_information') {
                     $scope.practical_informationShow = true;
-                    $scope.practical_informationMenu= true;
-                    $scope.before_you_go = data.practical_information.health_and_safety.before_you_go[0];
-                    $scope.dangers_and_annoyances = data.practical_information.health_and_safety.dangers_and_annoyances[0];
-                    $scope.in_transit = data.practical_information.health_and_safety.in_transit[0];
-                    $scope.while_youre_there = data.practical_information.health_and_safety.while_youre_there[0];
-                    $scope.visas = data.practical_information.visas[0];
+                    $scope.practical_informationMenu = true;
 
-                    if (data.practical_information.money_and_costs) {
+                    if (data.practical_information &&
+                        data.practical_information.health_and_safety &&
+                        data.practical_information.health_and_safety.before_you_go
+                        && data.practical_information.health_and_safety.before_you_go[0]) {
+                        $scope.before_you_go = data.practical_information.health_and_safety.before_you_go[0];
+
+                    }
+                    if (data.practical_information &&
+                        data.practical_information.health_and_safety &&
+                        data.practical_information.health_and_safety.before_you_go
+                        && data.practical_information.health_and_safety.before_you_go [0]) {
+                        $scope.dangers_and_annoyances = data.practical_information.health_and_safety.dangers_and_annoyances[0];
+
+                    }
+                    if (data.practical_information &&
+                        data.practical_information.health_and_safety &&
+                        data.practical_information.health_and_safety.before_you_go
+                        && data.practical_information.health_and_safety.before_you_go[0]) {
+                        $scope.while_youre_there = data.practical_information.health_and_safety.while_youre_there[0];
+
+                    }
+                    if (data.practical_information &&
+                        data.practical_information.health_and_safety &&
+                        data.practical_information.health_and_safety.before_you_go &&
+                        data.practical_information.health_and_safety.before_you_go[0]) {
+                        $scope.visas = data.practical_information.visas[0];
+
+                    }
+
+
+                    if (data.practical_information && data.practical_information.money_and_costs && data.practical_information.money_and_costs.cost) {
                         $scope.money_and_costsShow = true;
                         $scope.cost = data.practical_information.money_and_costs.cost[0];
                         $scope.money = data.practical_information.money_and_costs.money[0];
@@ -77,7 +109,7 @@ angular.module('destinationApp', ['ngMaterial', 'hm.readmore'])
                 if (key == 'weather') {
                     if (data.weather.when_to_go) {
                         $scope.when_to_goShow = true;
-                        $scope.when_to_goMenu= true;
+                        $scope.when_to_goMenu = true;
                         $scope.overviewWeather = data.weather.when_to_go.overview[0];
                         $scope.climate = data.weather.when_to_go.climate[0];
 

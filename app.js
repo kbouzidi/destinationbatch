@@ -27,7 +27,7 @@ var template = fs.readFileSync(__dirname, 'utf8');
 //console.log(template);
 
 
-q.all([parser.parseTaxonomies(taxonomieStream), parser.parseDestination(destinationStream), parser.jadeConverter(template) ]).spread(function (taxonomies, destination, jadeTemplate) {
+q.all([parser.parseTaxonomies(taxonomieStream), parser.parseDestination(destinationStream)]).spread(function (taxonomies, destination, jadeTemplate) {
     return gen.htmlGenerator(taxonomies, destination, jadeTemplate);
 }).then(function (result) {
     return gen.htmlWriter(result, outputDestination);

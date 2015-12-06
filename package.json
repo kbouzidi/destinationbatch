@@ -17,7 +17,9 @@
   "author": "Khalil BOUZIDI",
   "license": "ISC",
   "dependencies": {
+    "bluebird": "^3.0.6",
     "chai": "^3.4.1",
+    "fs-extra": "^0.26.2",
     "html2jade": "^0.8.4",
     "jade": "^1.11.0",
     "jsonfile": "^2.2.3",

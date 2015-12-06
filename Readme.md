@@ -26,5 +26,5 @@ Go to the server folder and execute the following commands
   - `mocha test/test.js`
  
 ## Results screen shot
-  - ![alt tag](https://github.com/kbouzidi/destinationbatch/blob/develop/screenshot/Example.png)
+![alt tag](https://github.com/kbouzidi/destinationbatch/blob/develop/screenshot/Example.png)
 

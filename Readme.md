@@ -1,4 +1,4 @@
-# Welcome to handler-key-server
+# Welcome to Lonely Planet XML -> HTML
 
 ## Environment setup
 Download and setup the following applications:

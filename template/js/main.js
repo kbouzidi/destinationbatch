@@ -15,7 +15,7 @@ angular.module('destinationApp', ['ngMaterial', 'hm.readmore'])
 
 
         console.log("START");
-        $http.get('data/destination.json').success(function (data) {
+        $http.get('data/destinations.json').success(function (data) {
             $scope.name = data.name;
             $scope.id = data.id;
 
@@ -30,19 +30,19 @@ angular.module('destinationApp', ['ngMaterial', 'hm.readmore'])
                     }
 
                     if (data.overview) {
-                        $scope.history += '\n' + _.get(data, 'overview[0]', null);
+                        $scope.history += '\n' + _.get(data, 'overview', null);
                     }
 
                     if (data.overview) {
-                        $scope.history += '\n' + _.get(data, 'introductory.introduction.overview[0]', null)
+                        $scope.history += '\n' + _.get(data, 'introductory.introduction.overview', null)
                     }
 
                 } else if (data.overview) {
 
-                    $scope.history += '\n' + data.overview[0]
+                    $scope.history += '\n' + data.overview
                 } else if (data.introductory) {
 
-                    $scope.history += '\n' + _.get(data, 'introductory.introduction.overview[0]', null);
+                    $scope.history += '\n' + _.get(data, 'introductory.introduction.overview', null);
                 }
 
             }
@@ -52,14 +52,15 @@ angular.module('destinationApp', ['ngMaterial', 'hm.readmore'])
             for (var key in data) {
                 if (key == 'practical_information') {
 
-                    $scope.before_you_go = _.get(data, 'practical_information.health_and_safety.before_you_go[0]', null);
-                    $scope.dangers_and_annoyances = _.get(data, 'practical_information.health_and_safety.dangers_and_annoyances[0]', null);
-                    $scope.visas = _.get(data, 'practical_information.visas[0]', null);
-                    $scope.while_youre_there = _.get(data, 'practical_information.health_and_safety.while_youre_there[0]', null);
+                    $scope.before_you_go = _.get(data, 'practical_information.health_and_safety.before_you_go', null);
+                    $scope.in_transit = _.get(data, 'practical_information.health_and_safety.in_transit', null);
+                    $scope.dangers_and_annoyances = _.get(data, 'practical_information.health_and_safety.dangers_and_annoyances', null);
+                    $scope.visas = _.get(data, 'practical_information.visas', null);
+                    $scope.while_youre_there = _.get(data, 'practical_information.health_and_safety.while_youre_there', null);
 
 
-                    $scope.cost = _.get(data, 'practical_information.money_and_costs.cost[0]', null);
-                    $scope.money = _.get(data, 'practical_information.money_and_costs.money[0]', null);
+                    $scope.cost = _.get(data, 'practical_information.money_and_costs.cost', null);
+                    $scope.money = _.get(data, 'practical_information.money_and_costs.money', null);
                     if ($scope.cost || $scope.money) {
                         $scope.money_and_costsShow = true;
 
@@ -80,13 +81,13 @@ angular.module('destinationApp', ['ngMaterial', 'hm.readmore'])
 
                 if (key == 'transport') {
 
-                    $scope.overviewTransport = _.get(data, 'transport.getting_around.overview[0]', null);
-                    $scope.air = _.get(data, 'transport.getting_around.air[0]', null);
-                    $scope.bicycle = _.get(data, 'transport.getting_around.bicycle[0]', null);
-                    $scope.car_and_motorcycle = _.get(data, 'transport.getting_around.car_and_motorcycle[0]', null);
-                    $scope.local_transport = _.get(data, 'transport.getting_around.local_transport[0]', null);
-                    $scope.train = _.get(data, 'transport.getting_around.train[0]', null);
-                    $scope.gettingThere = _.get(data, 'data.transport.getting_there_and_away.air[0]', null);
+                    $scope.overviewTransport = _.get(data, 'transport.getting_around.overview', null);
+                    $scope.air = _.get(data, 'transport.getting_around.air', null);
+                    $scope.bicycle = _.get(data, 'transport.getting_around.bicycle', null);
+                    $scope.car_and_motorcycle = _.get(data, 'transport.getting_around.car_and_motorcycle', null);
+                    $scope.local_transport = _.get(data, 'transport.getting_around.local_transport', null);
+                    $scope.train = _.get(data, 'transport.getting_around.train', null);
+                    $scope.gettingThere = _.get(data, 'transport.getting_there_and_away.air', null);
 
                     if ($scope.overviewTransport ||
                         $scope.air ||
@@ -96,7 +97,7 @@ angular.module('destinationApp', ['ngMaterial', 'hm.readmore'])
                         $scope.train ||
                         $scope.gettingThere) {
 
-                        $scope.transportShow = true;
+                       // $scope.transportShow = true;
                         $scope.transportMenu = true;
                     }
                 }
@@ -104,8 +105,8 @@ angular.module('destinationApp', ['ngMaterial', 'hm.readmore'])
 
                 if (key == 'weather') {
                     if (data.weather.when_to_go) {
-                        $scope.overviewWeather = _.get(data, 'weather.when_to_go.overview[0]', null);
-                        $scope.climate = _.get(data, 'weather.when_to_go.climate[0]', null);
+                        $scope.overviewWeather = _.get(data, 'weather.when_to_go.overview', null);
+                        $scope.climate = _.get(data, 'weather.when_to_go.climate', null);
                         if ($scope.overviewWeather ||
                             $scope.climate) {
                             $scope.when_to_goShow = true;
@@ -119,8 +120,8 @@ angular.module('destinationApp', ['ngMaterial', 'hm.readmore'])
                 if (key == 'work_live_study') {
                     if (data.work_live_study.work) {
 
-                        $scope.overviewWork = _.get(data, 'work_live_study.work.overview[0]', null);
-                        $scope.business = _.get(data, 'work_live_study.work.business[0]', null);
+                        $scope.overviewWork = _.get(data, 'work_live_study.work.overview', null);
+                        $scope.business = _.get(data, 'work_live_study.work.business', null);
 
                         if ($scope.overviewWork ||
                             $scope.business) {
@@ -158,6 +159,7 @@ angular.module('destinationApp', ['ngMaterial', 'hm.readmore'])
             $scope.tab = 'home';
             $scope.selectTab = function (setTab) {
                 if (setTab === 'home') {
+                    $scope.home = true;
                     $scope.workShow = true;
                     $scope.when_to_goShow = true;
                     $scope.transportShow = true;

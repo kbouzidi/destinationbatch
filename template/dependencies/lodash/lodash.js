@@ -637,7 +637,8 @@
     }
 
     /**
-     * Used by `_.trim` and `_.trimRight` to get the index of the last non-whitespace
+     * Used by `_.trim` and `_.trimRight` to
+     * * the index of the last non-whitespace
      * character of `string`.
      *
      * @private
@@ -9601,7 +9602,19 @@
          */
         function get(object, path, defaultValue) {
             var result = object == null ? undefined : baseGet(object, toPath(path), (path + ''));
-            return result === undefined ? defaultValue : result[0];
+            if (result === undefined) {
+                return  defaultValue
+            } else {
+                if (result[0]) {
+                    return  result[0];
+                } else {
+
+                    return result;
+                }
+
+            }
+            ;
+
         }
 
         /**

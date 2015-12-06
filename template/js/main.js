@@ -171,7 +171,7 @@ angular.module('destinationApp', ['ngMaterial', 'hm.readmore'])
                     $scope.practical_informationShow = true;
 
                 }
-                if (setTab === 'practical_information') {
+                if (setTab === 'transport') {
                     getSectionOff();
                     $scope.transportShow = true;
 

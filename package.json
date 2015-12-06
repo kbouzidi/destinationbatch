@@ -1,10 +1,10 @@
 {
   "name": "destinationparser",
   "version": "0.0.1",
-  "description": "## Environment setup Download and setup the following applications:",
+  "description": "Lonely Planet XML -> HTML",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha test/tests.js"
   },
   "repository": {
     "type": "git",

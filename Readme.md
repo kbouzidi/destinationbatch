@@ -19,6 +19,14 @@ Go to the server folder and execute the following commands
 - `npm install -g mocha`
 
 ## Run Batch
+  `sh run.sh`
+
+## Other options
   `node app.js [taxonomy.xml] [destination.xml] [destination-repo]`
+   `mocha test/test.js`
+ 
+## Results screen shot
+- ![alt tag](https://github.com/kbouzidi/destinationbatch/blob/develop/screenshot/Example.png)
+   
 
 

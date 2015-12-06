@@ -21,12 +21,18 @@
 <div id="wrapper">
 <div id="sidebar">
     <div class="block">
-        <h3>Navigation</h3>
+        <h3>See also</h3>
 
         <div class="content">
-            <div class="inner">
-                HIERARCHY NAVIGATION GOES HERE
+            <div class="inner" ng-show='cities'>
+                <ul ng-repeat="city in cities">
+                    <li class="first"><a href="/{{city}}/index.html'" ng-show='homeMenu'
+                            >{{city}}</a>
+                    </li>
+
+                </ul>
             </div>
+
         </div>
     </div>
 </div>

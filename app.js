@@ -15,20 +15,20 @@ var log4js = require('log4js'),
     q = require('./lib/utils/q'),
     gen = require('./lib/documentgenerator');
 
+
 var taxonomieStream = fs.createReadStream(taxonomieFile);
 var destinationStream = fs.createReadStream(destinationFile);
 
 
-var outputDestination = __dirname + batchArgu[2];
+var outputDestination = batchArgu[2];
 var templateSource = __dirname + '/template/';
-
 
 q.all([parser.parseTaxonomies(taxonomieStream), parser.parseDestination(destinationStream)])
     .spread(function (taxonomies, destination) {
         return gen.generateHtmls(taxonomies, destination, outputDestination, templateSource);
-    }).then(function (result) {
-        logger.info(result);
-        return result;
+    }).then(function (res) {
+        logger.info(res.result);
+        return res;
     }).catch(function (error) {
         logger.error(error);
     });

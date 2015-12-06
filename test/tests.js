@@ -5,7 +5,6 @@ var fse = require('fs-extra');
 var os = require('os');
 var path = require('path');
 var parser = require('../lib/parser');
-var jade = require('jade');
 var json2file = require('jsonfile');
 var gen = require('../lib/documentgenerator');
 var _ = require('lodash');

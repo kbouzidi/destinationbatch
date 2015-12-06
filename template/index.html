@@ -8,164 +8,317 @@
 
 </head>
 
-<body>
-<div id="container" ng-controller="MainCtrl">
-    <div id="header">
-        <div id="logo"></div>
-        <h1> {{name}}</h1>
-    </div>
+<body ng-controller="MainCtrl">
+<div id="container">
+<div id="header">
+    <div id="logo"></div>
+    <h1> {{name}}</h1>
+</div>
 
-    <div id="wrapper">
-        <div id="sidebar">
-            <div class="block">
-                <h3>Navigation</h3>
+<div id="wrapper">
+<div id="sidebar">
+    <div class="block">
+        <h3>Navigation</h3>
 
-                <div class="content">
-                    <div class="inner">
-                        HIERARCHY NAVIGATION GOES HERE
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="main">
-            <div class="block">
-                <div class="secondary-navigation">
-                    <ul>
-                        <li class="first"><a href="#" ng-show='homeMenu'
-                                             ng-click="selectTab('home')">{{name}}</a>
-                        </li>
-                        <li class="first"><a href="#" ng-show='practical_informationShow'
-                                             ng-click="selectTab('practical_information')">Practical
-                            Information </a>
-                        </li>
-
-
-                        <li class="first"><a href="#" ng-show='transportMenu' ng-click="selectTab('transport')">Transport</a>
-                        </li>
-                        <li class="first"><a href="#" ng-show='when_to_goMenu' ng-click="selectTab('when_to_go')">Weather</a>
-                        </li>
-
-                        <li class="first"><a href="#" ng-show='workMenu' ng-click="selectTab('work_live_study')">Work
-                            live &
-                            study</a>
-                        </li>
-                    </ul>
-                    <div class="clear"></div>
-
-                    <div class="clear"></div>
-                </div>
-                <div class="content" ng-show='home' ng-show="isSelected('home')">
-                    <div class="inner">
-                        <h3>Overview</h3>
-                        <md-content layout-padding>
-                            <div hm-read-more hm-text="{{history}}" hm-limit="{{limit}}" hm-more-text="{{moreText}}"
-                                 hm-less-text="{{lessText}}" hm-dots-class="{{dotsClass}}"
-                                 hm-link-class="{{linkClass}}">
-                            </div>
-                        </md-content>
-                    </div>
-
-
-                    <div class="row">
-                        <ul>
-                            <li class="col-s-4" ng-show='practical_informationShow'>
-                                <h3><a href="#" ng-click="selectTab('practical_information')">Practical
-                                    Information</a></h3>
-
-                                <p>{{before_you_go| limitTo:200}}...</p>
-                                <a href="#" ng-click="selectTab('practical_information')">read more</a></li>
-
-
-                            <li class="col-s-4" ng-show='transportShow'>
-                                <h3><a href="#" ng-click="selectTab('transport')">Transport
-                                </a></h3>
-
-                                <p>{{overviewTransport| limitTo:200}}...</p>
-                                <a href="#" ng-click="selectTab('practical_information')">read more</a></li>
-
-
-                            <li class="col-s-4" ng-show='when_to_goShow'>
-                                <h3><a href="#" ng-click="selectTab('when_to_go')">Weather
-                                </a></h3>
-
-
-                                <p>{{overviewWeather| limitTo:200}}...</p>
-                                <a href="#" ng-click="selectTab('practical_information')">read more</a></li>
-
-                        </ul>
-                        <div></div>
-                        <ul>
-                            <li class="col-s-4" ng-show='workShow'>
-                                <h3><a href="#" ng-click="selectTab('work_live_study')">Work
-                                    live &
-                                    study
-                                </a></h3>
-
-
-                                <p>{{overviewWork| limitTo:200}}...</p>
-                                <a href="#" ng-click="selectTab('practical_information')">read more</a></li>
-
-                        </ul>
-
-                    </div>
-
-                </div>
-
-                <div ng-show="isSelected('practical_information')">
-                    <div class="inner">
-
-                        <h3>Before Your go</h3>
-                        <md-content layout-padding>
-                            <div hm-read-more hm-text="{{before_you_go}}" hm-limit="{{limit}}"
-                                 hm-more-text="{{moreText}}"
-                                 hm-less-text="{{lessText}}" hm-dots-class="{{dotsClass}}"
-                                 hm-link-class="{{linkClass}}">
-                            </div>
-                        </md-content>
-                    </div>
-
-                    <div class="inner">
-
-                        <h3>dangers_and_annoyances</h3>
-                        <md-content layout-padding>
-                            <div hm-read-more hm-text="{{dangers_and_annoyances}}" hm-limit="{{limit}}"
-                                 hm-more-text="{{moreText}}"
-                                 hm-less-text="{{lessText}}" hm-dots-class="{{dotsClass}}"
-                                 hm-link-class="{{linkClass}}">
-                            </div>
-                        </md-content>
-                    </div>
-
-                    <div class="inner">
-
-                        <h3>in_transit</h3>
-                        <md-content layout-padding>
-                            <div hm-read-more hm-text="{{in_transit}}" hm-limit="{{limit}}"
-                                 hm-more-text="{{moreText}}"
-                                 hm-less-text="{{lessText}}" hm-dots-class="{{dotsClass}}"
-                                 hm-link-class="{{linkClass}}">
-                            </div>
-                        </md-content>
-                    </div>
-
-                    <div class="inner">
-
-                        <h3>while_youre_there</h3>
-                        <md-content layout-padding>
-                            <div hm-read-more hm-text="{{while_youre_there}}" hm-limit="{{limit}}"
-                                 hm-more-text="{{moreText}}"
-                                 hm-less-text="{{lessText}}" hm-dots-class="{{dotsClass}}"
-                                 hm-link-class="{{linkClass}}">
-                            </div>
-                        </md-content>
-                    </div>
-
-
-                </div>
+        <div class="content">
+            <div class="inner">
+                HIERARCHY NAVIGATION GOES HERE
             </div>
         </div>
     </div>
+</div>
+
+<div id="main">
+<div class="block">
+<div class="secondary-navigation">
+    <ul>
+        <li class="first"><a href="#" ng-show='homeMenu'
+                             ng-click="selectTab('home')">{{name}}</a>
+        </li>
+        <li class="first"><a href="#" ng-show='practical_informationMenu'
+                             ng-click="selectTab('practical_information')">Practical
+            Information </a>
+        </li>
+
+
+        <li class="first"><a href="#" ng-show='transportMenu' ng-click="selectTab('transport')">Transport</a>
+        </li>
+        <li class="first"><a href="#" ng-show='when_to_goMenu' ng-click="selectTab('when_to_go')">Weather</a>
+        </li>
+
+        <li class="first"><a href="#" ng-show='workMenu' ng-click="selectTab('work_live_study')">Work
+            live &
+            study</a>
+        </li>
+    </ul>
+    <div class="clear"></div>
+
+    <div class="clear"></div>
+</div>
+<div class="content" ng-show='home' ng-show="isSelected('home')">
+    <div class="inner">
+        <h3>Overview</h3>
+        <md-content layout-padding>
+            <div hm-read-more hm-text="{{history}}" hm-limit="{{limit}}" hm-more-text="{{moreText}}"
+                 hm-less-text="{{lessText}}" hm-dots-class="{{dotsClass}}"
+                 hm-link-class="{{linkClass}}">
+            </div>
+        </md-content>
+    </div>
+
+
+    <div class="row">
+        <ul>
+            <li class="col-s-4" ng-show='practical_informationShow'>
+                <h3><a href="#" ng-click="selectTab('practical_information')">Practical
+                    Information</a></h3>
+
+                <p>{{before_you_go| limitTo:200}}...</p>
+                <a href="#" ng-click="selectTab('practical_information')">read more</a></li>
+
+
+            <li class="col-s-4" ng-show='transportShow'>
+                <h3><a href="#" ng-click="selectTab('transport')">Transport
+                </a></h3>
+
+                <p>{{overviewTransport| limitTo:200}}...</p>
+                <a href="#" ng-click="selectTab('transport')">read more</a></li>
+
+
+            <li class="col-s-4" ng-show='when_to_goShow'>
+                <h3><a href="#" ng-click="selectTab('when_to_go')">Weather
+                </a></h3>
+
+
+                <p>{{overviewWeather| limitTo:200}}...</p>
+                <a href="#" ng-click="selectTab('practical_information')">read more</a></li>
+
+        </ul>
+        <div></div>
+        <ul>
+            <li class="col-s-4" ng-show='workShow'>
+                <h3><a href="#" ng-click="selectTab('work_live_study')">Work
+                    live &
+                    study
+                </a></h3>
+
+
+                <p>{{overviewWork| limitTo:200}}...</p>
+                <a href="#" ng-click="selectTab('practical_information')">read more</a></li>
+
+        </ul>
+
+    </div>
+
+</div>
+
+
+<div ng-show="isSelected('practical_information')">
+    <div class="inner">
+
+        <h3>Before Your go</h3>
+        <md-content layout-padding>
+            <div hm-read-more hm-text="{{before_you_go}}" hm-limit="{{limit}}"
+                 hm-more-text="{{moreText}}"
+                 hm-less-text="{{lessText}}" hm-dots-class="{{dotsClass}}"
+                 hm-link-class="{{linkClass}}">
+            </div>
+        </md-content>
+    </div>
+
+    <div class="inner">
+
+        <h3>Dangers and annoyances</h3>
+        <md-content layout-padding>
+            <div hm-read-more hm-text="{{dangers_and_annoyances}}" hm-limit="{{limit}}"
+                 hm-more-text="{{moreText}}"
+                 hm-less-text="{{lessText}}" hm-dots-class="{{dotsClass}}"
+                 hm-link-class="{{linkClass}}">
+            </div>
+        </md-content>
+    </div>
+
+    <div class="inner">
+
+        <h3>In Transit</h3>
+        <md-content layout-padding>
+            <div hm-read-more hm-text="{{in_transit}}" hm-limit="{{limit}}"
+                 hm-more-text="{{moreText}}"
+                 hm-less-text="{{lessText}}" hm-dots-class="{{dotsClass}}"
+                 hm-link-class="{{linkClass}}">
+            </div>
+        </md-content>
+    </div>
+
+    <div class="inner">
+
+        <h3>While you there</h3>
+        <md-content layout-padding>
+            <div hm-read-more hm-text="{{while_youre_there}}" hm-limit="{{limit}}"
+                 hm-more-text="{{moreText}}"
+                 hm-less-text="{{lessText}}" hm-dots-class="{{dotsClass}}"
+                 hm-link-class="{{linkClass}}">
+            </div>
+        </md-content>
+    </div>
+</div>
+
+
+<div ng-show="isSelected('transport')">
+
+    <div class="inner" ng-show="overviewTransport">
+
+        <h3>Overview </h3>
+        <md-content layout-padding>
+            <div hm-read-more hm-text="{{overviewTransport}}" hm-limit="{{limit}}"
+                 hm-more-text="{{moreText}}"
+                 hm-less-text="{{lessText}}" hm-dots-class="{{dotsClass}}"
+                 hm-link-class="{{linkClass}}">
+            </div>
+        </md-content>
+    </div>
+
+    <div class="inner" ng-show="air">
+
+        <h3>Air </h3>
+        <md-content layout-padding>
+            <div hm-read-more hm-text="{{air}}" hm-limit="{{limit}}"
+                 hm-more-text="{{moreText}}"
+                 hm-less-text="{{lessText}}" hm-dots-class="{{dotsClass}}"
+                 hm-link-class="{{linkClass}}">
+            </div>
+        </md-content>
+    </div>
+
+    <div class="inner" ng-show="bicycle">
+
+        <h3>Bicycle </h3>
+        <md-content layout-padding>
+            <div hm-read-more hm-text="{{bicycle}}" hm-limit="{{limit}}"
+                 hm-more-text="{{moreText}}"
+                 hm-less-text="{{lessText}}" hm-dots-class="{{dotsClass}}"
+                 hm-link-class="{{linkClass}}">
+            </div>
+        </md-content>
+    </div>
+
+    <div class="inner" ng-show="car_and_motorcycle">
+
+        <h3>Car and Motorcycle </h3>
+        <md-content layout-padding>
+            <div hm-read-more hm-text="{{car_and_motorcycle}}" hm-limit="{{limit}}"
+                 hm-more-text="{{moreText}}"
+                 hm-less-text="{{lessText}}" hm-dots-class="{{dotsClass}}"
+                 hm-link-class="{{linkClass}}">
+            </div>
+        </md-content>
+    </div>
+
+
+    <div class="inner" ng-show="local_transport">
+
+        <h3>Local transport </h3>
+        <md-content layout-padding>
+            <div hm-read-more hm-text="{{local_transport}}" hm-limit="{{limit}}"
+                 hm-more-text="{{moreText}}"
+                 hm-less-text="{{lessText}}" hm-dots-class="{{dotsClass}}"
+                 hm-link-class="{{linkClass}}">
+            </div>
+        </md-content>
+    </div>
+
+
+    <div class="inner" ng-show="train">
+
+        <h3>Train </h3>
+        <md-content layout-padding>
+            <div hm-read-more hm-text="{{train}}" hm-limit="{{limit}}"
+                 hm-more-text="{{moreText}}"
+                 hm-less-text="{{lessText}}" hm-dots-class="{{dotsClass}}"
+                 hm-link-class="{{linkClass}}">
+            </div>
+        </md-content>
+    </div>
+
+
+    <div class="inner" ng-show="gettingThere">
+
+        <h3>Getting there </h3>
+        <md-content layout-padding>
+            <div hm-read-more hm-text="{{gettingThere}}" hm-limit="{{limit}}"
+                 hm-more-text="{{moreText}}"
+                 hm-less-text="{{lessText}}" hm-dots-class="{{dotsClass}}"
+                 hm-link-class="{{linkClass}}">
+            </div>
+        </md-content>
+    </div>
+
+
+</div>
+
+<div ng-show="isSelected('when_to_go')">
+
+    <div class="inner" ng-show="overviewWeather">
+
+        <h3>Overview </h3>
+        <md-content layout-padding>
+            <div hm-read-more hm-text="{{overviewWeather}}" hm-limit="{{limit}}"
+                 hm-more-text="{{moreText}}"
+                 hm-less-text="{{lessText}}" hm-dots-class="{{dotsClass}}"
+                 hm-link-class="{{linkClass}}">
+            </div>
+        </md-content>
+    </div>
+
+
+    <div class="inner" ng-show="climate">
+
+        <h3>Climat </h3>
+        <md-content layout-padding>
+            <div hm-read-more hm-text="{{climate}}" hm-limit="{{limit}}"
+                 hm-more-text="{{moreText}}"
+                 hm-less-text="{{lessText}}" hm-dots-class="{{dotsClass}}"
+                 hm-link-class="{{linkClass}}">
+            </div>
+        </md-content>
+    </div>
+
+
+</div>
+
+
+<div ng-show="isSelected('work_live_study')">
+
+
+    <div class="inner" ng-show="overviewWork">
+
+        <h3>Overview </h3>
+        <md-content layout-padding>
+            <div hm-read-more hm-text="{{overviewWork}}" hm-limit="{{limit}}"
+                 hm-more-text="{{moreText}}"
+                 hm-less-text="{{lessText}}" hm-dots-class="{{dotsClass}}"
+                 hm-link-class="{{linkClass}}">
+            </div>
+        </md-content>
+    </div>
+
+
+    <div class="inner" ng-show="business">
+
+        <h3>business </h3>
+        <md-content layout-padding>
+            <div hm-read-more hm-text="{{business}}" hm-limit="{{limit}}"
+                 hm-more-text="{{moreText}}"
+                 hm-less-text="{{lessText}}" hm-dots-class="{{dotsClass}}"
+                 hm-link-class="{{linkClass}}">
+            </div>
+        </md-content>
+    </div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </body>
 
 <script src="dependencies/angular/angular.min.js"></script>

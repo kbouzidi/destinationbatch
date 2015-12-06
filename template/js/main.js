@@ -24,6 +24,7 @@ angular.module('destinationApp', ['ngMaterial', 'hm.readmore'])
                 $scope.homeMenu = true;
                 if (_.get(data, 'history', null)) {
                     $scope.histories = data.history;
+                    $scope.history = '';
                     for (var i = 0; i < data.history.length; i++) {
                         $scope.history += '\n' + data.history[i];
 
@@ -97,7 +98,7 @@ angular.module('destinationApp', ['ngMaterial', 'hm.readmore'])
                         $scope.train ||
                         $scope.gettingThere) {
 
-                       // $scope.transportShow = true;
+                        $scope.transportShow = true;
                         $scope.transportMenu = true;
                     }
                 }
@@ -152,7 +153,6 @@ angular.module('destinationApp', ['ngMaterial', 'hm.readmore'])
                 $scope.when_to_goShow = false;
                 $scope.transportShow = false;
                 $scope.practical_informationShow = false;
-                $scope.money_and_costsShow = true;
 
             };
 
@@ -165,9 +165,25 @@ angular.module('destinationApp', ['ngMaterial', 'hm.readmore'])
                     $scope.transportShow = true;
                     $scope.practical_informationShow = true;
 
-                } else if (setTab === 'practical_information') {
+                }
+                if (setTab === 'practical_information') {
                     getSectionOff();
                     $scope.practical_informationShow = true;
+
+                }
+                if (setTab === 'practical_information') {
+                    getSectionOff();
+                    $scope.transportShow = true;
+
+                }
+                if (setTab === 'when_to_go') {
+                    getSectionOff();
+                    $scope.when_to_goShow = true;
+
+                }
+                if (setTab === 'work_live_study') {
+                    getSectionOff();
+                    $scope.workShow = true;
 
                 }
                 $scope.tab = setTab;

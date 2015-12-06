@@ -11,7 +11,7 @@ angular.module('destinationApp', ['ngMaterial', 'hm.readmore'])
     })
 
 
-    .controller('MainCtrl', function ($scope, $http) {
+    .controller('MainCtrl', function ($scope, $http, _) {
 
 
         console.log("START");
@@ -22,7 +22,7 @@ angular.module('destinationApp', ['ngMaterial', 'hm.readmore'])
             if (data.history || data.overview || data.introductory) {
                 $scope.home = true;
                 $scope.homeMenu = true;
-                if (data.history) {
+                if (_.get(data, 'history', null)) {
                     $scope.histories = data.history;
                     for (var i = 0; i < data.history.length; i++) {
                         $scope.history += '\n' + data.history[i];
@@ -85,9 +85,14 @@ angular.module('destinationApp', ['ngMaterial', 'hm.readmore'])
 
 
                     if (data.practical_information && data.practical_information.money_and_costs && data.practical_information.money_and_costs.cost) {
-                        $scope.money_and_costsShow = true;
-                        $scope.cost = data.practical_information.money_and_costs.cost[0];
-                        $scope.money = data.practical_information.money_and_costs.money[0];
+
+                        $scope.cost = _.get(data, 'practical_information.money_and_costs.cost[0]', null);
+                        $scope.money = _.get(data, 'practical_information.money_and_costs.money[0]', null);
+                        if ($scope.cost || $scope.money) {
+                            $scope.money_and_costsShow = true;
+
+                        }
+
                     }
 
                 }
@@ -177,4 +182,40 @@ angular.module('destinationApp', ['ngMaterial', 'hm.readmore'])
         });
 
     })
+
+    .run(
+    function (_) {
+
+    })
+    .factory(
+    "_",
+    function ($window) {
+
+        // Introduction of loadsh 
+        // Copyright 
+        // This code was intentianly copied to quickly integrate loadsh 
+        // source http://www.bennadel.com/blog/2720-creating-and-extending-a-lodash-underscore-service-in-angularjs.htm
+        // Get a local handle on the global lodash reference.
+        var _ = $window._;
+
+        delete( $window._ );
+
+        _.naturalList = function (collection) {
+            if (collection.length > 2) {
+                var head = collection.slice(0, -1);
+                var tail = collection[ collection.length - 1 ];
+                return( head.join(", ") + ", and " + tail );
+            }
+            if (collection.length === 2) {
+                return( collection.join(" and ") );
+            }
+            if (collection.length) {
+                return( collection[ 0 ] );
+            }
+            return( "" );
+        };
+
+        return( _ );
+    }
+)
 ;

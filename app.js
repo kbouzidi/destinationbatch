@@ -13,7 +13,6 @@ var config = require('./config/default.json'),
     taxonomieFile = batchArgu[0],
     destinationFile = batchArgu[1],
     parser = require('./lib/parser'),
-    jsonfile = require('jsonfile'),
     q = require('./lib/utils/q'),
     gen = require('./lib/documentgenerator');
 
@@ -24,15 +23,13 @@ var destinationStream = fs.createReadStream(destinationFile);
 var outputDestination = __dirname + batchArgu[2];
 
 var template = fs.readFileSync(__dirname, 'utf8');
-//console.log(template);
 
 
 q.all([parser.parseTaxonomies(taxonomieStream), parser.parseDestination(destinationStream)]).spread(function (taxonomies, destination, jadeTemplate) {
-    return gen.htmlGenerator(taxonomies, destination, jadeTemplate);
+    return gen.generateHtmls(taxonomies, destination, jadeTemplate);
 }).then(function (result) {
-    return gen.htmlWriter(result, outputDestination);
-}).then(function (tt) {
-    console.log(tt);
+    logger.info(result);
+    return result;
 }).catch(function (err) {
     console.log(err);
 });

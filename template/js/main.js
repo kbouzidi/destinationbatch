@@ -190,16 +190,8 @@ angular.module('destinationApp', ['ngMaterial', 'hm.readmore'])
     .factory(
     "_",
     function ($window) {
-
-        // Introduction of loadsh 
-        // Copyright 
-        // This code was intentianly copied to quickly integrate loadsh 
-        // source http://www.bennadel.com/blog/2720-creating-and-extending-a-lodash-underscore-service-in-angularjs.htm
-        // Get a local handle on the global lodash reference.
         var _ = $window._;
         delete( $window._ );
-
-
         return( _ );
     }
 )

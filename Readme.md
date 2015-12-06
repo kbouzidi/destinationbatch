@@ -16,3 +16,9 @@ Download and setup the following applications:
 Go to the server folder and execute the following commands
 
 - `npm install`
+- `npm install -g mocha`
+
+## Run Batch
+  `node app.js [taxonomy.xml] [destination.xml] [destination-repo]`
+
+

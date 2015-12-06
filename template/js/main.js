@@ -15,7 +15,7 @@ angular.module('destinationApp', ['ngMaterial', 'hm.readmore'])
 
 
         console.log("START");
-        $http.get('data/destinations.json').success(function (data) {
+        $http.get('data/destination.json').success(function (data) {
             $scope.name = data.name;
             $scope.id = data.id;
 

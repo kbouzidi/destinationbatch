@@ -23,12 +23,13 @@ var outputDestination = __dirname + batchArgu[2];
 var templateSource = __dirname + '/template/';
 
 
-q.all([parser.parseTaxonomies(taxonomieStream), parser.parseDestination(destinationStream)]).spread(function (taxonomies, destination, jadeTemplate) {
-    return gen.generateHtmls(taxonomies, destination, outputDestination, templateSource);
-}).then(function (result) {
-    logger.info(result);
-    return result;
-}).catch(function (error) {
-    logger.error(error);
-});
+q.all([parser.parseTaxonomies(taxonomieStream), parser.parseDestination(destinationStream)])
+    .spread(function (taxonomies, destination) {
+        return gen.generateHtmls(taxonomies, destination, outputDestination, templateSource);
+    }).then(function (result) {
+        logger.info(result);
+        return result;
+    }).catch(function (error) {
+        logger.error(error);
+    });
 

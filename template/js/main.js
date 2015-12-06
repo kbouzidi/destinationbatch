@@ -30,19 +30,19 @@ angular.module('destinationApp', ['ngMaterial', 'hm.readmore'])
                     }
 
                     if (data.overview) {
-                        $scope.history += '\n' + data.overview[0]
+                        $scope.history += '\n' + _.get(data, 'overview[0]', null);
                     }
 
                     if (data.overview) {
-                        $scope.history += '\n' + data.introductory.introduction.overview[0]
+                        $scope.history += '\n' + _.get(data, 'introductory.introduction.overview[0]', null)
                     }
 
                 } else if (data.overview) {
 
                     $scope.history += '\n' + data.overview[0]
-                } else if (data.overview) {
+                } else if (data.introductory) {
 
-                    $scope.history += '\n' + data.introductory.introduction.overview[0]
+                    $scope.history += '\n' + _.get(data, 'introductory.introduction.overview[0]', null);
                 }
 
             }
@@ -51,83 +51,83 @@ angular.module('destinationApp', ['ngMaterial', 'hm.readmore'])
             var result = [];
             for (var key in data) {
                 if (key == 'practical_information') {
-                    $scope.practical_informationShow = true;
-                    $scope.practical_informationMenu = true;
 
-                    if (data.practical_information &&
-                        data.practical_information.health_and_safety &&
-                        data.practical_information.health_and_safety.before_you_go
-                        && data.practical_information.health_and_safety.before_you_go[0]) {
-                        $scope.before_you_go = data.practical_information.health_and_safety.before_you_go[0];
+                    $scope.before_you_go = _.get(data, 'practical_information.health_and_safety.before_you_go[0]', null);
+                    $scope.dangers_and_annoyances = _.get(data, 'practical_information.health_and_safety.dangers_and_annoyances[0]', null);
+                    $scope.visas = _.get(data, 'practical_information.visas[0]', null);
+                    $scope.while_youre_there = _.get(data, 'practical_information.health_and_safety.while_youre_there[0]', null);
 
-                    }
-                    if (data.practical_information &&
-                        data.practical_information.health_and_safety &&
-                        data.practical_information.health_and_safety.before_you_go
-                        && data.practical_information.health_and_safety.before_you_go [0]) {
-                        $scope.dangers_and_annoyances = data.practical_information.health_and_safety.dangers_and_annoyances[0];
+
+                    $scope.cost = _.get(data, 'practical_information.money_and_costs.cost[0]', null);
+                    $scope.money = _.get(data, 'practical_information.money_and_costs.money[0]', null);
+                    if ($scope.cost || $scope.money) {
+                        $scope.money_and_costsShow = true;
 
                     }
-                    if (data.practical_information &&
-                        data.practical_information.health_and_safety &&
-                        data.practical_information.health_and_safety.before_you_go
-                        && data.practical_information.health_and_safety.before_you_go[0]) {
-                        $scope.while_youre_there = data.practical_information.health_and_safety.while_youre_there[0];
-
-                    }
-                    if (data.practical_information &&
-                        data.practical_information.health_and_safety &&
-                        data.practical_information.health_and_safety.before_you_go &&
-                        data.practical_information.health_and_safety.before_you_go[0]) {
-                        $scope.visas = data.practical_information.visas[0];
-
+                    if ($scope.before_you_go ||
+                        data.dangers_and_annoyances ||
+                        data.visas ||
+                        data.while_youre_there ||
+                        data.cost ||
+                        data.money) {
+                        $scope.practical_informationShow = true;
+                        $scope.practical_informationMenu = true;
                     }
 
-
-                    if (data.practical_information && data.practical_information.money_and_costs && data.practical_information.money_and_costs.cost) {
-
-                        $scope.cost = _.get(data, 'practical_information.money_and_costs.cost[0]', null);
-                        $scope.money = _.get(data, 'practical_information.money_and_costs.money[0]', null);
-                        if ($scope.cost || $scope.money) {
-                            $scope.money_and_costsShow = true;
-
-                        }
-
-                    }
 
                 }
 
 
                 if (key == 'transport') {
-                    $scope.transportShow = true;
-                    $scope.transportMenu = true;
-                    $scope.overviewTransport = data.transport.getting_around.overview[0];
-                    $scope.air = data.transport.getting_around.air[0];
-                    $scope.bicycle = data.transport.getting_around.bicycle[0];
-                    $scope.car_and_motorcycle = data.transport.getting_around.car_and_motorcycle[0];
-                    $scope.local_transport = data.transport.getting_around.local_transport[0];
-                    $scope.train = data.transport.getting_around.train[0];
-                    $scope.gettingThere = data.transport.getting_there_and_away.air[0];
+
+                    $scope.overviewTransport = _.get(data, 'transport.getting_around.overview[0]', null);
+                    $scope.air = _.get(data, 'transport.getting_around.air[0]', null);
+                    $scope.bicycle = _.get(data, 'transport.getting_around.bicycle[0]', null);
+                    $scope.car_and_motorcycle = _.get(data, 'transport.getting_around.car_and_motorcycle[0]', null);
+                    $scope.local_transport = _.get(data, 'transport.getting_around.local_transport[0]', null);
+                    $scope.train = _.get(data, 'transport.getting_around.train[0]', null);
+                    $scope.gettingThere = _.get(data, 'data.transport.getting_there_and_away.air[0]', null);
+
+                    if ($scope.overviewTransport ||
+                        $scope.air ||
+                        $scope.bicycle ||
+                        $scope.car_and_motorcycle ||
+                        $scope.local_transport ||
+                        $scope.train ||
+                        $scope.gettingThere) {
+
+                        $scope.transportShow = true;
+                        $scope.transportMenu = true;
+                    }
                 }
 
 
                 if (key == 'weather') {
                     if (data.weather.when_to_go) {
-                        $scope.when_to_goShow = true;
-                        $scope.when_to_goMenu = true;
-                        $scope.overviewWeather = data.weather.when_to_go.overview[0];
-                        $scope.climate = data.weather.when_to_go.climate[0];
+                        $scope.overviewWeather = _.get(data, 'weather.when_to_go.overview[0]', null);
+                        $scope.climate = _.get(data, 'weather.when_to_go.climate[0]', null);
+                        if ($scope.overviewWeather ||
+                            $scope.climate) {
+                            $scope.when_to_goShow = true;
+                            $scope.when_to_goMenu = true;
 
+                        }
                     }
 
 
                 }
                 if (key == 'work_live_study') {
                     if (data.work_live_study.work) {
-                        $scope.workShow = true;
-                        $scope.workMenu = true;
-                        $scope.overviewWork = data.work_live_study.work.overview[0];
-                        $scope.business = data.work_live_study.work.business[0];
+
+                        $scope.overviewWork = _.get(data, 'work_live_study.work.overview[0]', null);
+                        $scope.business = _.get(data, 'work_live_study.work.business[0]', null);
+
+                        if ($scope.overviewWork ||
+                            $scope.business) {
+                            $scope.workShow = true;
+                            $scope.workMenu = true;
+
+                        }
 
                     }
 
@@ -197,23 +197,8 @@ angular.module('destinationApp', ['ngMaterial', 'hm.readmore'])
         // source http://www.bennadel.com/blog/2720-creating-and-extending-a-lodash-underscore-service-in-angularjs.htm
         // Get a local handle on the global lodash reference.
         var _ = $window._;
-
         delete( $window._ );
 
-        _.naturalList = function (collection) {
-            if (collection.length > 2) {
-                var head = collection.slice(0, -1);
-                var tail = collection[ collection.length - 1 ];
-                return( head.join(", ") + ", and " + tail );
-            }
-            if (collection.length === 2) {
-                return( collection.join(" and ") );
-            }
-            if (collection.length) {
-                return( collection[ 0 ] );
-            }
-            return( "" );
-        };
 
         return( _ );
     }

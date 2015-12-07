@@ -14,6 +14,37 @@ destinationbatch/
   |- run.sh
 ```
 
+## Description 
+The project parse pair file Taxonomy and destinations and produces an .html folder for each destination 
+
+```
+  |- lib/ The Javascript libraries and utils used to parse XML files and the html producer
+```
+
+```
+  |- template/ The template for each destination
+```
+
+```
+  |- test/  Contains test uses cases
+```
+
+```
+  |- app.js  The main Javascript library
+```
+
+```
+  |- run.sh Run script
+```
+
+```
+  |- package.json List of packages
+```
+
+```
+  |- screenshot/ Some screenshots
+```
+
 ## Environment setup
 Download and setup the following applications:
 

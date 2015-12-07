@@ -8,7 +8,6 @@ var parser = require('../lib/parser');
 var json2file = require('jsonfile');
 var gen = require('../lib/documentgenerator');
 var _ = require('lodash');
-var path = require('path');
 
 
 var destinationsJson, taxonomieJson;
@@ -17,12 +16,12 @@ describe('Test Project', function () {
 
 
     it('Test taxonomies parse', function (done) {
-        var taxonomieStream = fs.createReadStream(__dirname + '/testdata/input/taxonomy.xml');
+        var taxonomieStream = fs.createReadStream(path.resolve(__dirname + '/testdata/input/taxonomy.xml'));
         assert.isNotNull(taxonomieStream);
         parser.parseTaxonomies(taxonomieStream).then(function (result) {
             assert.isNotNull(result);
             taxonomieJson = result;
-            json2file.writeFile(__dirname + '/testdata/output/taxonomies.json', result, function (err) {
+            json2file.writeFile(path.resolve(__dirname + '/testdata/output/taxonomies.json'), result, function (err) {
                 if (err) {
                     console.log(err);
                     assert.isNull(err, 'there was no error');
@@ -34,12 +33,12 @@ describe('Test Project', function () {
     });
 
     it('Test destinations parse', function (done) {
-        var destinations = fs.createReadStream(__dirname + '/testdata/input/destinations.xml');
+        var destinations = fs.createReadStream(path.resolve(__dirname + '/testdata/input/destinations.xml'));
         assert.isNotNull(destinations);
         parser.parseDestination(destinations).then(function (result) {
             assert.isNotNull(result);
             destinationsJson = result;
-            json2file.writeFile(__dirname + '/testdata/output/destinations.json', result[0], function (err) {
+            json2file.writeFile(path.resolve(__dirname + '/testdata/output/destinations.json'), result[0], function (err) {
                 if (err) {
                     assert.isNull(err, 'there was no error');
                 }

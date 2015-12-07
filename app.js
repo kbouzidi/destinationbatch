@@ -16,8 +16,8 @@ var log4js = require('log4js'),
     path = require('path');
 
 
-var taxonomyStream = fs.createReadStream(taxonomyFile);
-var destinationStream = fs.createReadStream(destinationFile);
+var taxonomyStream = fs.createReadStream(path.resolve(taxonomyFile));
+var destinationStream = fs.createReadStream(path.resolve(destinationFile));
 
 
 var outputDestination = batchArg[2];

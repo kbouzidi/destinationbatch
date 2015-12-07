@@ -1,6 +1,6 @@
 # Welcome to Lonely Planet XML -> HTML
 
-[![Build Status](https://api.travis-ci.org/kbouzidi/destinationbatch.svg?branch=master)](https://api.travis-ci.org/kbouzidi/destinationbatch.svg?branch=master)
+[![Build Status](https://api.travis-ci.org/kbouzidi/destinationbatch.svg?branch=master)](https://travis-ci.org/kbouzidi/destinationbatch/branches)
 
 
 ## Overall directory structure

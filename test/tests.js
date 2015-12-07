@@ -52,7 +52,7 @@ describe('Test Project', function () {
     it('Create Destination directory', function (done) {
         assert.isNotNull(taxonomieJson);
         assert.isNotNull(destinationsJson);
-        gen.generateHtmls(taxonomieJson, destinationsJson, __dirname + '/testdata/output/', path.dirname(__dirname) + '/template/').then(function (res) {
+        gen.generateHtml(taxonomieJson, destinationsJson, __dirname + '/testdata/output/', path.dirname(__dirname) + '/template/').then(function (res) {
             assert.equal('SUCCESS', res.result);
             done();
         }).catch(function (err) {

@@ -65,7 +65,7 @@ For Windows users please install `Cygwin`
  - `Github`
 
 ## Continuous integration
- - `Travis-Ci` [![Build Status](https://api.travis-ci.org/kbouzidi/destinationbatch.svg?branch=master)](https://travis-ci.org/kbouzidi/destinationbatch/branches)
+ - [![Build Status](https://api.travis-ci.org/kbouzidi/destinationbatch.svg?branch=master)](https://travis-ci.org/kbouzidi/destinationbatch/branches)
 
 ## Server installation 
 Go to the server folder and execute the following commands

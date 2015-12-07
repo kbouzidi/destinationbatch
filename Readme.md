@@ -11,6 +11,7 @@ destinationbatch/
   |- template/
   |- test/
   |- .gitignore
+  |- .travis.yml
   |- app.js
   |- package.json
   |- run.sh

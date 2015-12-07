@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
-echo "Do you wish to run test compain?"
+echo "Do you wish to run test campaign?"
 
 #Run batch manually
 run (){
 echo "Please enter taxonomy XML: "
 read taxonomyFile
-echo "Please enter destination XML: "
+echo "Please enter destinations XML: "
 read destinationFile
-echo "Please enter output destination "
-read outputdestination
+echo "Please enter output directory "
+read outputDir
 
 installOption
 
@@ -24,7 +24,7 @@ break
 #Run batch without installation of libs
 runOnly(){
 echo 'Batch is now running'
-node app $taxonomyFile $destinationFile $outputdestination
+node app $taxonomyFile $destinationFile $outputDir
 break
 }
 
@@ -32,7 +32,7 @@ break
 installRun (){
 npm install -g mocha
 npm install
-node app $taxonomyFile $destinationFile $outputdestination
+node app $taxonomyFile $destinationFile $outputDir
 break
 }
 
@@ -42,6 +42,8 @@ installTest (){
 npm install -g mocha
 npm install
 mocha test/tests.js
+echo 'Test Finished'
+echo 'Data ara available at '${PWD}'/testdata/output/'
 break
 }
 
@@ -49,6 +51,8 @@ break
 #Run test without installation of libs
 testOnly (){
 mocha test/tests.js
+echo 'Test Finished'
+echo 'Data ara available at '${PWD}'/testdata/output/'
 break
 }
 
